@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>authentication</title>
+</head>
+
+<body>
+    {% for message in messages %}
+    <div class="aleart aleart-{{ message.tags }} aleart-dismissible fade show" role="aleart">
+        <strong>Message:</strong>{{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-lable="Close">
+        <span aria-hidden="true">&times;</span>
+     </button>
+    </div>
+    {% endfor %}
+
+  <h3>Welcome Users</h3>
+
+   <button type="submit"><a href="/register">Register</a></button>
+   <button type="submit"><a href="/login">Login</a></button>
+   
+ 
+</body>
+</html>

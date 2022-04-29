@@ -1,0 +1,14 @@
+    {% include 'alerts.html' %} <br>
+
+    <a>hello {{ user.username }} Welcome to Dashboard</a><br>
+ 
+  <a href="javascript:{document.getElementById('logout').submit()}"
+    class="nav-link">
+    <i class="fas fa-sign-out-alt"></i><button> Logout</button>
+  </a>
+  <form action="{% url 'logout' %}" method ="POST" id="logout">
+    {% csrf_token %}
+
+     
+  
+
