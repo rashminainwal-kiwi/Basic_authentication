@@ -9,7 +9,7 @@ ERROR ={
      },
 
     'register_succesfully' :{
-         'registered' : 'You are now succesfully registered and can login'
+         'registered' : 'Your Account has been created succesfully!!.'
      },
 
     'password' :{
