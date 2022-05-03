@@ -76,7 +76,6 @@ class register(View):
                             'token': generate_tokens.make_token(user),
                         })
 
-
                         # email = EmailMessage(email_subject, message2, to=['rashminainwal274@gmail.com'])
                         # email.send()
 
@@ -89,15 +88,13 @@ class register(View):
                         email.fail_silently = True
                         email.send()
 
-
                         # return HttpResponse('Please confirm your email address to complete the registration')
 
                         return redirect('login')
             else:
-             messages.error(
+                messages.error(
                     request, constants.ERROR['password']['does_not_match'])
         return redirect('register')
-
 
 
 # login class for login the user
@@ -135,22 +132,21 @@ class logout(View):
             messages.success(request, constants.ERROR['logout']['logout'])
         return redirect('home')
 
-        
+
 class Activate(View):
-    def get (self,request, uidb64, token):
+    def get(self, request, uidb64, token):
 
         try:
             uid = force_str(urlsafe_b64decode(uidb64))
             user = User.objects.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-                user = None
-
+            user = None
         if user is not None and generate_tokens.check_token(user, token):
             user.is_active = True
-            # print(user)
+            print(user)
             # user.profile.signup_confirmation = True
             user.save()
-            login(request,user)
+            login(request, user)
             messages.success(request, "Your Account has been activated!!")
             return redirect('home')
         else:
@@ -162,7 +158,3 @@ class Activate(View):
 def dashboard(request):
 
     return render(request, 'dashboard.html')
-
-
-
-
