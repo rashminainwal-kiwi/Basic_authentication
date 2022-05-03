@@ -13,7 +13,8 @@ from django.utils.encoding import force_bytes, force_str
 from .tokens import generate_tokens
 from authentication.settings import EMAIL_HOST_USER
 from django.template.loader import render_to_string
-from base64 import urlsafe_b64decode, urlsafe_b64encode
+#from base64 import urlsafe_b64decode, urlsafe_b64encode
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 
 def home(request):
@@ -72,7 +73,7 @@ class register(View):
 
                             'name': user,
                             'domain': current_site.domain,
-                            'uid': urlsafe_b64encode(force_bytes(user.pk)),
+                            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                             'token': generate_tokens.make_token(user),
                         })
 
@@ -137,20 +138,23 @@ class Activate(View):
     def get(self, request, uidb64, token):
 
         try:
-            uid = force_str(urlsafe_b64decode(uidb64))
+            uid = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            user = None
-        if user is not None and generate_tokens.check_token(user, token):
-            user.is_active = True
-            print(user)
-            # user.profile.signup_confirmation = True
-            user.save()
-            login(request, user)
-            messages.success(request, "Your Account has been activated!!")
-            return redirect('home')
-        else:
-            return render(request, 'activation_failed.html')
+            # user = None
+
+         if user is not None :
+            #  if user = user :
+             if token == token: 
+                user.is_active = True
+                user.save()
+                # login(request,user)
+                messages.success(request, "Your Account has been activated!!")
+                return redirect('login')
+         else:
+              return render(request, 'activation_failed.html')
+
+        
 
         # return redirect('login')
 
